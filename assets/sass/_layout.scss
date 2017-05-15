@@ -1,0 +1,64 @@
+body {
+    background: $dark-gray;
+    color: $light;
+    margin: 0;
+    padding-top: $navbar-height;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 2em;
+}
+
+h1,
+h2 {
+    font-family: 'Playfair Display', cursive;
+    font-weight: 100;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+.container-sm {
+    width: 60%;
+    margin: 0 auto;
+}
+.section {
+    padding-top: $navbar-height;
+}
+
+$introTextHeight: 500px;
+.intro-text {
+    width: 200px;
+    max-width: 30%;
+    margin-top: $introTextHeight/3;
+    vertical-align: middle;
+}
+
+.cover {
+    width: 80%;
+    margin: 2% auto;
+    padding: 3%;
+    border: 30px solid $lighter;
+    background: $light;
+    color: $dark-gray;
+
+    .headshot {
+        text-align: right;
+        max-width: 70%;
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
+
+
+::-moz-selection {
+    background: $light;
+    color: $dark-gray;
+    text-shadow: 1px 1px 0 #FFF;
+}
+::selection {
+    background: $light;
+    color: $dark-gray;
+    text-shadow: 1px 1px 0 #FFF;
+}

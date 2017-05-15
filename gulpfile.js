@@ -11,16 +11,16 @@ var browserSync = require('browser-sync').create();
 
 
 var styleSheets = [
-  'src/sass/main.scss'
+  'assets/sass/main.scss'
 ];
 
 var jsFiles = [
   "node_modules/jquery/dist/jquery.js",
-  "src/js/main.js"
+  "assets/js/main.js"
 ];
 
 var images = [
-  'src/img/*'
+  'assets/img/*'
 ];
 
 
@@ -41,7 +41,8 @@ gulp.task('sass-lint', function(){
 gulp.task('sass-build', function () {
   return gulp.src(styleSheets)
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('./css'));
+    browserSync.reload();
 });
 
 
@@ -49,7 +50,7 @@ gulp.task('sass-build', function () {
 gulp.task('js', ['js-lint', 'js-build']);
 
 gulp.task('js-lint', function() {
-  return gulp.src('src/js/*.js')
+  return gulp.src('assets/js/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
@@ -58,11 +59,12 @@ gulp.task('js-build', function() {
   gulp.src(jsFiles)
     .pipe(sourcemaps.init())
       .pipe(concat('app.js'))
-      .pipe(gulp.dest('dist/js'))
+      .pipe(gulp.dest('./js'))
       .pipe(uglify())
       .pipe(rename('app.min.js'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('./js'));
+    browserSync.reload();
 });
 
 
@@ -70,23 +72,28 @@ gulp.task('js-build', function() {
 gulp.task('img', function(){
   gulp.src(images)
     .pipe(imagemin())
-    .pipe(gulp.dest('dist/img'));
+    .pipe(gulp.dest('./img'));
+    browserSync.reload();
 });
 
 
 
 gulp.task('watch', function() {
-    gulp.watch('./src/sass/*.scss', ['sass']);
-    gulp.watch('./src/js/*.js',     ['js']);
-    gulp.watch('./src/img/*',       ['img']);
+    gulp.watch('./assets/sass/*.scss', ['sass']);
+    gulp.watch('./assets/js/*.js',     ['js']);
+    gulp.watch('./assets/img/*',       ['img']);
 });
 
 gulp.task('serve', function() {
-    gulp.start('watch');
+    gulp.watch('./assets/sass/*.scss', ['sass']);
+    gulp.watch('./assets/js/*.js',     ['js']);
+    gulp.watch('./assets/img/*',       ['img']);
+    gulp.watch("app/*.html")
+        .on('change', browserSync.reload);
 
     browserSync.init({
         server: {
-            baseDir: "dist/"
+            baseDir: "./"
         }
     });
 });
